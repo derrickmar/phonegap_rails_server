@@ -3,6 +3,7 @@ class RegistrationsController < Devise::RegistrationsController
   respond_to :html, :xml, :json
 
   def create
+    puts "IN RegistrationsController"
     puts sign_up_params
     build_resource(sign_up_params)
 
