@@ -1,11 +1,10 @@
 class RegistrationsController < Devise::RegistrationsController
   # is there a way to do this so I don't disable CRSF???
   skip_before_filter  :verify_authenticity_token, :only => [:create]
-  respond_to :html, :xml, :to_json
+  respond_to :html, :xml 
 
   def create
     puts "In RegistrationsController"
-    puts sign_up_params
     build_resource(sign_up_params)
 
     resource_saved = resource.save
@@ -28,19 +27,15 @@ class RegistrationsController < Devise::RegistrationsController
           format.html { redirect_to after_inactive_sign_up_path_for(resource) }
           format.json { render :json => { user: resource, success: false } }
         end
-        # render :json => resource
       end
     else
       puts "Sign up failed"
+      puts resource.errors.full_messages
       clean_up_passwords resource
-      # render :json => resource
-      # render :json => response.to_json
       respond_to do |format|
-        format.html { redirect_to after_inactive_sign_up_path_for(resource) }
-        format.json { render :json => { resource: resource, success: false} }
+        format.html { respond_with resource }
+        format.json { render :json => { resource: resource, success: false, errors: resource.errors.full_messages } }
       end
-      # respond_with resource, location: after_inactive_sign_up_path_for(resource)
-      # return render :json => {:success => false}, :callback => params['callback']
     end
   end
 end
