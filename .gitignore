@@ -14,3 +14,19 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+database.yml
+doc/
+*.swp
+*~
+.project
+.DS_Store
+.idea
+.secret
+#ignore all textfiles, txt files, odt and docx files
+*.txt
+*.mp4
+*.odt
+*.docx
+/path/
+# Ignore application configuration
+/config/application.yml

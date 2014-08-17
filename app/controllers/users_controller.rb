@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
-  	skip_before_filter :verify_authenticity_token, :only => [:update]
+  	skip_before_filter :verify_authenticity_token, :only => [:update, :still_validated]
 
 	def show
+	end
+
+	def still_validated
+		@user = User.find(params[:id])
+		render :json => { user: @user, success: true } 
 	end
 
 	def update
