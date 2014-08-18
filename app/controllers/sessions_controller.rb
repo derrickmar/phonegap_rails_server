@@ -45,8 +45,8 @@ class SessionsController < Devise::SessionsController
 	def destroy
 		p 'In DESTROY'
 		puts params
-		# binding.pry
-		puts "current_user before sign_out: " + current_user.email
+		binding.pry
+		puts current_user
 		signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
 		puts "is signed_out nil?"
 		puts signed_out
@@ -54,6 +54,7 @@ class SessionsController < Devise::SessionsController
 		p 'flash and current_user should print out nil'
 		puts flash[:notice]
 		puts current_user == nil
+		# seems to jump back in front of destroy after this.
 		yield if block_given?
 		respond_to_on_destroy
 	end
