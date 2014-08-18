@@ -15,8 +15,8 @@ class SessionsController < Devise::SessionsController
 		puts current_user
 		puts current_user.email
 		respond_to do |format|
-			format.html { redirect_to after_sign_in_path_for(resource) }
-			format.json { render :json => { user: resource, success: true } }
+			format.html { respond_with resource, location: after_sign_in_path_for(resource) }
+			# format.json { render :json => { user: resource, success: true } }
 		end
 		# if resource.valid_password?(params[:user_login][:password])
 		# 	sign_in("user", resource)
