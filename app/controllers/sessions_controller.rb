@@ -1,5 +1,6 @@
 class SessionsController < Devise::SessionsController
-	skip_before_filter :verify_authenticity_token, :only => [:create]
+	# acts_as_token_authentication_handler_for User, except: [:destroy]
+	skip_before_filter :verify_authenticity_token, :only => [:create, :destroy]
 
 	# def create
 	# 	puts "In sessions controller"
@@ -25,16 +26,16 @@ class SessionsController < Devise::SessionsController
 	# 	# end
 	# end
 
-	  # POST /resource/sign_in
-	  def create
-	  	p 'in create!'
-	  	self.resource = warden.authenticate!(auth_options)
-	  	set_flash_message(:notice, :signed_in) if is_flashing_format?
-	  	sign_in(resource_name, resource)
-	  	yield resource if block_given?
-	  	respond_to do |format|
-	  		format.html { respond_with resource, location: after_sign_in_path_for(resource) }
-	  		format.json { render :json => { user: self.resource, success: true } }
-	  	end
-	  end
+	# POST /resource/sign_in
+	def create
+		p 'in create!'
+		self.resource = warden.authenticate!(auth_options)
+		set_flash_message(:notice, :signed_in) if is_flashing_format?
+		sign_in(resource_name, resource)
+		yield resource if block_given?
+		respond_to do |format|
+			format.html { respond_with resource, location: after_sign_in_path_for(resource) }
+			format.json { render :json => { user: self.resource, success: true } }
+		end
+	end
 end
