@@ -28,7 +28,7 @@ class SessionsController < Devise::SessionsController
 
 	# POST /resource/sign_in
 	def create
-		p 'in create!'
+		puts 'IN CREATE SessionsController'
 		self.resource = warden.authenticate!(auth_options)
 		set_flash_message(:notice, :signed_in) if is_flashing_format?
 		sign_in(resource_name, resource)
