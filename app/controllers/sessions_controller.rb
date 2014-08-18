@@ -34,14 +34,17 @@ class SessionsController < Devise::SessionsController
 		sign_in(resource_name, resource)
 		yield resource if block_given?
 		puts current_user.email
+		puts resource
+		puts params
 		respond_to do |format|
 			format.html { respond_with resource, location: after_sign_in_path_for(resource) }
-			format.json { render :json => { user: self.resource, success: true } }
+			format.json { render :json => { user: resource, success: true } }
 		end
 	end
 
 	def destroy
 		p 'In DESTROY'
+		puts params
 		signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
 		set_flash_message :notice, :signed_out if signed_out && is_flashing_format?
 		yield if block_given?
@@ -53,7 +56,6 @@ class SessionsController < Devise::SessionsController
     # support returning empty response on GET request
     respond_to do |format|
     	format.json { render :json => { success: true } }
-    	format.all { head :no_content }
     	format.any(*navigational_formats) { redirect_to after_sign_out_path_for(resource_name) }
     end
 end
