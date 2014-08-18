@@ -45,8 +45,13 @@ class SessionsController < Devise::SessionsController
 	def destroy
 		p 'In DESTROY'
 		puts params
+		# binding.pry
 		signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+		puts signed_out
 		set_flash_message :notice, :signed_out if signed_out && is_flashing_format?
+		p 'flash and current_user should print out nil'
+		puts flash[:notice]
+		puts current_user
 		yield if block_given?
 		respond_to_on_destroy
 	end
